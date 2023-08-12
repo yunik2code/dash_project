@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+
+    
+
+    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><a  class="floating-btn btn btn-secondary ">
+        <i class="fa-solid fa-plus"></i>
+    </a>
+</button>
+
+
+
+
+
+
+ 
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create DasH</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+<form method="post">
+    {% csrf_token %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" required class="form-control" name="pseudoname" placeholder="Pseudo name" aria-label="Pseudo name" aria-describedby="basic-addon1">
+              </div>
+
+
+              <div class="mb-3 row">
+                <label for="inputPassword" class="form-label">DasH Title</label>
+                
+                  <input type="text" name="title" class="form-control" id="inputPassword" required>
+                
+              </div>
+              <label for="drp" class="form-label">DasH Type</label>
+              <select class="form-select mb-2" aria-label="Default select example" id='drp'name="field" required>
+                
+                <option value="politics">Politics</option>
+                <option value="movie">Movie</option>
+                <option value="education">Education</option>
+                <option value="technology">Technology</option>
+                <option value="art_crafts">Art and Crafts</option>
+                <option value="music">Music</option>
+                <option value="dance">Dance</option>
+                <option value="food">Food</option>
+                <option value="meme">Meme</option>
+                <option value="faith">Faith</option>
+                <option value="people">peoples</option>
+                <option value="pet">Pets and Animals</option>
+              </select>
+
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">DasH Content</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" required></textarea>
+              </div>
+            
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid ">
+    <!--Post Template-->
+    {% if not posts %}
+    <div class='text-center'>
+        <h4 class="text-danger">Oops ! No Posts Found.</h4>
+    </div>
+    {% else %}
+    {% for post in posts reversed %}
+   
+
+   
+
+
+      <div class="container mt-5 ">
+        <div class="row ">
+            <div class="col-md-8 offset-md-2">
+              <div class="card border border-white border-2 ">
+                <div class="card-header">
+                    <h5 class="card-title">{{post.title}}</h5>
+                </div>
+                <div class="card-body overflow-y-auto">
+                    <p class="card-text">{{post.content}}.</p>
+                </div>
+                <div class="card-footer text-primary" style="height:55px;">
+                    <span>{{post.pseudo_name}} &nbsp; &nbsp; &nbsp;{{post.date_time}}<a href="{% url 'dislike' post.post_id %}"><i class="fa-solid fa-thumbs-down position-absolute start-50 me-2" style="color: #000000;"></i></a><a href="{% url 'like' post.post_id %}"><i class="fa-solid fa-thumbs-up position-absolute  end-0 me-1" style="color: #000000;"></i></a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+<div class="modal fade" id="exampleModalScroll" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-ddialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{posts}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Button trigger modal -->
+
+
+
+
+
+<!-- Modal -->
+
+{% endblock %}      

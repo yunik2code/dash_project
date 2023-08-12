@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block body %}
+
+<div class="container mt-5 ">
+    <div class="row ">
+        <div class="col-md-8 offset-md-2">
+          <div class="card border border-white border-2 ">
+            <div class="card-header">
+                <h5 class="card-title">{{post.title}}</h5>
+            </div>
+            <div class="card-body overflow-y-auto">
+                <p class="card-text">{{post.content}}.</p>
+            </div>
+            
+            <div class="card-footer text-primary" style="height:55px;">
+                <span>{{post.pseudo_name}} &nbsp; &nbsp; &nbsp;{{post.date_time}}<i class="fa-solid fa-thumbs-down position-absolute start-50 me-2" style="color: #000000;"></i><a href="{% url 'dislike' post.post_id %}"><p class="position-absolute  start-50 ">{{dislike_count}}</p></a><i class="fa-solid fa-thumbs-up position-absolute  end-0 me-1" style="color: #000000;"></i><a href="{% url 'like' post.post_id %}"><p class="position-absolute  end-0 me-2">{{like_count}}</p></a></span>
+                
+            </div>
+            <form method="POST">
+            <div class="input-group mb-3 mt-3 me-2 ms-2">
+                {% csrf_token %}
+                <input type="text" class="form-control " placeholder="Your View" aria-label="Recipient's username" aria-describedby="button-addon2" name="comment">
+                <input type="hidden" value="{{post.post_id}}" name="post">
+                <button class="btn btn-outline-secondary me-4" type="submit" id="button-addon2">Share</button>
+              </div>
+            </form>
+            {% for view in views reversed %}
+            <div class="card-body overflow-y-auto border border-primary mb-2 mt-2 me-2 ms-2" style="border-radius:20px; height:80px;">
+                <p class="card-text text-primary" style="height: 25px;">Anonymous</p>
+                <p style="height: 25px;">{{view.comment}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
